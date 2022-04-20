@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import FusionGrid from "fusiongrid"; 
+import FusionGrid from "fusiongrid";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,23 +7,23 @@ import FusionGrid from "fusiongrid";
 })
 export class AppComponent {
   //title = 'fusion-grid-test';
-  
+
   schema = [
     {
-        name: 'Rank',
-        type: 'number',
+      name: 'Rank',
+      type: 'number',
     }, {
-        name: 'Model'
+      name: 'Model'
     },
     {
-        name: 'Make'
+      name: 'Make'
     },
     {
-        name: 'Units Sold',
-        type: 'number'
+      name: 'Units Sold',
+      type: 'number'
     },
     {
-        name: 'Assembly Location'
+      name: 'Assembly Location'
     }
   ];
 
@@ -72,22 +72,22 @@ export class AppComponent {
       }
     },
     columns: [
-      { field: 'Rank',width: '70px'},
-      { 
-        field: 'Make', 
-        type:'html',
-        template: function(params){
+      { field: 'Rank', width: '200px' },
+      {
+        field: 'Make',
+        type: 'html',
+        template: function (params) {
           var url = "https://static.fusioncharts.com/fg/demo/assets/images/" +
-          params.values["Make"] + ".png";
+            params.values["Make"] + ".png";
           var html = '<div><img src="' + url
-          + '" width="50px" style="vertical-align:middle"></div>';
+            + '" width="50px" style="vertical-align:middle"></div>';
           return html;
-        } 
+        }
       },
       {
         field: 'Units Sold',
-        width: '100px',
-        type:'chart',
+        width: '160px',
+        type: 'chart',
         tooltip: {
           headerTooltip: "Number of units sold globally",
           enableHeaderHelperIcon: true,
@@ -121,22 +121,22 @@ export class AppComponent {
       [2, "Pickup", "Ram", 633694, "Warren, Mich."]
     ];
   }
-  initialized(event: any){
+  initialized(event: any) {
     console.log(event);
   }
-  updateColumns(){
+  updateColumns() {
     this.gridConfig = {
       ...this.gridConfig,
-      columns:[{ field: 'Rank',width: '70px'},{ 
-        field: 'Make', 
-        type:'html',
-        template: function(params){
+      columns: [{ field: 'Rank', width: '70px' }, {
+        field: 'Make',
+        type: 'html',
+        template: function (params) {
           var url = "https://static.fusioncharts.com/fg/demo/assets/images/" +
-          params.values["Make"] + ".png";
+            params.values["Make"] + ".png";
           var html = '<div><img src="' + url
-          + '" width="50px" style="vertical-align:middle"></div>';
+            + '" width="50px" style="vertical-align:middle"></div>';
           return html;
-        } 
+        }
       }]
     }
   }
@@ -149,7 +149,7 @@ export class AppComponent {
           enable: true,
           style: { "background-color": "white" },
         },
-      }, 
+      },
     }
   }
 
@@ -169,6 +169,6 @@ export class AppComponent {
         }
       },
     }
-    
+
   }
 }
