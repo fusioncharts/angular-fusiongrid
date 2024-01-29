@@ -35,6 +35,15 @@ yarn add angular-fusiongrid
 
 See [yarn documentation](https://yarnpkg.com/en/docs) to know more about yarn usage.
 
+### Steps to publish Angular Fusiongrid
+## Build
+
+Run `ng build angular-fusiongrid` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Publishing
+
+After building your library with `ng build angular-fusiongrid`, go to the dist folder `cd dist/fusion-grid` and run `npm publish`.
+
 ### Usage
 
 #### Create a Application using Angular cli
