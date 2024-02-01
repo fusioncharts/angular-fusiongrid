@@ -8,22 +8,22 @@
     "declaration": false,
     "paths": {
       "angular-fusiongrid": [
-        "dist/fusion-grid/fusion-grid",
-        "dist/fusion-grid"
+        "./dist",
       ]
     },
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
-    "module": "es2020",
+    "target": "es2018",
+    "module": "es2015",
     "lib": [
       "es2018",
       "dom"
     ]
   },
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false
+    "enableI18nLegacyMessageIdFormat": false,
+    "compilationMode": "partial"
   }
 }

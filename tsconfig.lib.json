@@ -1,9 +1,9 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "extends": "../../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/lib",
-    "target": "es2015",
+    "outDir": "./out-tsc/lib",
+    "target": "es2018",
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
@@ -16,7 +16,8 @@
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
-    "enableResourceInlining": true
+    "enableResourceInlining": true,
+    "compilationMode": "partial"
   },
   "exclude": [
     "src/test.ts",
