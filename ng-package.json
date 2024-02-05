@@ -7,7 +7,15 @@
   "allowedNonPeerDependencies": [
     "@angular/common",
     "@angular/core",
-    "@angular/compiler"
+    "@angular/compiler",
+    "@angular/animations",
+    "@angular/forms",
+    "@angular/platform-browser",
+    "@angular/platform-browser-dynamic",
+    "@angular/router",
+    "rxjs",
+    "tslib",
+    "zone.js"
   ]
 
 }
