@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import FusionGrid from "fusiongrid";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   //title = 'fusion-grid-test';
-
   schema = [
     {
       name: 'Rank',
@@ -49,6 +50,7 @@ export class AppComponent {
     [19, "Cherokee", "Jeep", 191397, "Belvidere, Ill."],
     [20, "Sentra", "Nissan", 184618, "Canton, Miss."],
   ];
+
   dataTable: any;
 
   gridConfig: any = {
@@ -109,21 +111,25 @@ export class AppComponent {
       },
     ]
   }
+
   constructor() {
     const dataStore = new FusionGrid.DataStore();
     this.dataTable = dataStore.createDataTable(this.data, this.schema, {
       enableIndex: false
     });
   }
+
   updateData() {
     this.data = [
       [1, "F-Series", "Ford", 896526, "Claycomo, Mo."],
       [2, "Pickup", "Ram", 633694, "Warren, Mich."]
     ];
   }
+
   initialized(event: any) {
     console.log(event);
   }
+
   updateColumns() {
     this.gridConfig = {
       ...this.gridConfig,
@@ -140,6 +146,7 @@ export class AppComponent {
       }]
     }
   }
+
   updateRowOption() {
     this.gridConfig = {
       ...this.gridConfig,
