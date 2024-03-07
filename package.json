@@ -1,12 +1,13 @@
 {
   "name": "angular-fusiongrid",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+		"publish": "ng build --configuration production && cd dist && npm publish"
   },
   "private": false,
   "peerDependencies": {

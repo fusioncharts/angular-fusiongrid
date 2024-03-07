@@ -1,14 +1,23 @@
 import { Component } from '@angular/core';
-import FusionGrid from "fusiongrid";
+import { RouterOutlet } from '@angular/router';
+import { FusionGridModule } from 'angular-fusiongrid';
+// @ts-ignore
+import FusionGrid from 'fusiongrid';
+import 'fusiongrid/dist/fusiongrid.css';
+
+FusionGridModule.setFGRoot(FusionGrid);
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, FusionGridModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrl: './app.component.css',
 })
 
+
 export class AppComponent {
-  //title = 'fusion-grid-test';
+  title = 'fusion-grid-test';
   schema = [
     {
       name: 'Rank',
@@ -78,7 +87,7 @@ export class AppComponent {
       {
         field: 'Make',
         type: 'html',
-        template: function (params) {
+        template: function (params: any) {
           var url = "https://static.fusioncharts.com/fg/demo/assets/images/" +
             params.values["Make"] + ".png";
           var html = '<div><img src="' + url
@@ -95,10 +104,10 @@ export class AppComponent {
           enableHeaderHelperIcon: true,
           enableCellTooltip: false
         },
-        formatter: function (params) {
+        formatter: function (params:any) {
           return new Intl.NumberFormat().format(params.cellValue);
         },
-        style: function (params) {
+        style: function (params:any) {
           if (params.cellValue > 600000) {
             return { 'background-color': 'lightgreen' }
           }
@@ -136,7 +145,7 @@ export class AppComponent {
       columns: [{ field: 'Rank', width: '70px' }, {
         field: 'Make',
         type: 'html',
-        template: function (params) {
+        template: function (params:any) {
           var url = "https://static.fusioncharts.com/fg/demo/assets/images/" +
             params.values["Make"] + ".png";
           var html = '<div><img src="' + url

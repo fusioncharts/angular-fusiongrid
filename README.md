@@ -1,98 +1,74 @@
-A simple and lightweight official Angular component for FusionGrid JavaScript grid library. `angular-fusiongrid` enables you to add JavaScript grid in your Angular application or project without any hassle.
+# Angular FusionCharts
 
-- Github Repo: [https://github.com/fusioncharts/angular-fusiongrid](https://github.com/fusioncharts/angular-fusiongrid)
+A simple and lightweight official Angular component for FusionGrid JavaScript grid library. Angular Fusiongrid enables you to add grids in your Angular application without any hassle.
 
 ## Getting Started
 
 ### Requirements
 
-- **Node.js**, **NPM/Yarn** installed globally in your OS.
-
-- **AngularCLI** installed globally in your OS.
-
-- **FusionGrid** and **Angular** installed in your project, as detailed below:
+- Node.js, NPM/Yarn
+- AngularCLI
+- [FusionGrid](https://www.npmjs.com/package/fusiongrid) and Angular
 
 ### Installation
 
-There are multiple ways to install `angular-fusiongrid` component.
+**Using NPM**
+
+```
+npm install angular-fusiongrid fusiongrid
+```
+
+**Using Yarn**
+
+```
+yarn add angular-fusiongrid fusiongrid
+```
 
 **Direct Download**
-All binaries are located on our [github repository](https://github.com/fusioncharts/angular-fusiongrid/).
 
-**Install from NPM**
-
-```
-npm install angular-fusiongrid
-```
-
-See [npm documentation](https://docs.npmjs.com/) to know more about npm usage.
-
-**Install from Yarn**
-
-```
-yarn add angular-fusiongrid
-```
-
-See [yarn documentation](https://yarnpkg.com/en/docs) to know more about yarn usage.
-
-### Usage
-
-#### Create a Application using Angular cli
-
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-
-import { FusionGridModule } from 'angular-fusiongrid';
-
-FusionGridModule.setFGRoot(FusionGrid);
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    FusionGridModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-```
+All binaries are located in our [github repository](https://github.com/fusioncharts/angular-fusiongrid/).
 
 ## Quick Start
 
-Here is a basic sample that shows how to create a grid using `angular-fusiongrid`:
+### Add and setup dependency
 
-In the app.component.ts add the below code
-````javascript
-import { Component } from '@angular/core';
-import FusionGrid from "@fusioncharts/fusiongrid"; 
+```
+import { FusionGridModule } from 'angular-fusiongrid';
+import FusionGrid from 'fusiongrid';
+import 'fusiongrid/dist/fusiongrid.css';
+
+FusionGridModule.setFGRoot(FusionGrid);
+
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [FusionGridModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrl: './app.component.css',
 })
+```
+
+### Create component
+
+```
 export class AppComponent {
-  
+  title = 'fusion-grid-test';
   schema = [
     {
-        name: 'Rank',
-        type: 'number',
+      name: 'Rank',
+      type: 'number',
     }, {
-        name: 'Model'
+      name: 'Model'
     },
     {
-        name: 'Make'
+      name: 'Make'
     },
     {
-        name: 'Units Sold',
-        type: 'number'
+      name: 'Units Sold',
+      type: 'number'
     },
     {
-        name: 'Assembly Location'
+      name: 'Assembly Location'
     }
   ];
 
@@ -118,17 +94,60 @@ export class AppComponent {
     [19, "Cherokee", "Jeep", 191397, "Belvidere, Ill."],
     [20, "Sentra", "Nissan", 184618, "Canton, Miss."],
   ];
+
   dataTable: any;
 
   gridConfig: any = {
+    // rowOptions: {
+    //   style: { "background-color": "oldlace" },
+    //   hover: {
+    //     enable: true,
+    //     style: { "background-color": "white" },
+    //   },
+    // },
+    pagination: {
+      enable: false,
+      pageSize: {
+        default: 10,
+        options: true
+      },
+      showPages: {
+        enable: true,
+        showTotal: true,
+        userInput: true
+      }
+    },
     columns: [
-      { field: 'Rank',width: '70px'},
-      { 
+      { field: 'Rank', width: '200px' },
+      {
         field: 'Make',
+        type: 'html',
+        template: function (params: any) {
+          var url = "https://static.fusioncharts.com/fg/demo/assets/images/" +
+            params.values["Make"] + ".png";
+          var html = '<div><img src="' + url
+            + '" width="50px" style="vertical-align:middle"></div>';
+          return html;
+        }
       },
       {
         field: 'Units Sold',
-        width: '100px',
+        width: '160px',
+        type: 'chart',
+        tooltip: {
+          headerTooltip: "Number of units sold globally",
+          enableHeaderHelperIcon: true,
+          enableCellTooltip: false
+        },
+        formatter: function (params:any) {
+          return new Intl.NumberFormat().format(params.cellValue);
+        },
+        style: function (params:any) {
+          if (params.cellValue > 600000) {
+            return { 'background-color': 'lightgreen' }
+          }
+          return;
+        }
       },
       {
         field: 'Assembly Location',
@@ -136,25 +155,96 @@ export class AppComponent {
       },
     ]
   }
+
   constructor() {
     const dataStore = new FusionGrid.DataStore();
     this.dataTable = dataStore.createDataTable(this.data, this.schema, {
       enableIndex: false
     });
   }
+
+  updateData() {
+    this.data = [
+      [1, "F-Series", "Ford", 896526, "Claycomo, Mo."],
+      [2, "Pickup", "Ram", 633694, "Warren, Mich."]
+    ];
+  }
+
+  initialized(event: any) {
+    console.log(event);
+  }
+
+  updateColumns() {
+    this.gridConfig = {
+      ...this.gridConfig,
+      columns: [{ field: 'Rank', width: '70px' }, {
+        field: 'Make',
+        type: 'html',
+        template: function (params:any) {
+          var url = "https://static.fusioncharts.com/fg/demo/assets/images/" +
+            params.values["Make"] + ".png";
+          var html = '<div><img src="' + url
+            + '" width="50px" style="vertical-align:middle"></div>';
+          return html;
+        }
+      }]
+    }
+  }
+
+  updateRowOption() {
+    this.gridConfig = {
+      ...this.gridConfig,
+      rowOptions: {
+        style: { "background-color": "red" },
+        hover: {
+          enable: true,
+          style: { "background-color": "white" },
+        },
+      },
+    }
+  }
+
+  updatePagination() {
+    this.gridConfig = {
+      ...this.gridConfig,
+      pagination: {
+        enable: true,
+        pageSize: {
+          default: 10,
+          options: true
+        },
+        showPages: {
+          enable: true,
+          showTotal: true,
+          userInput: true
+        }
+      },
+    }
+
+  }
 }
+```
 
+### Add the FusionGrid component selector in the app.component.html
 
-Add the Fusion grid component selector in the app.component.html
+```
+<fusion-grid
+ style="width: 1000px; height: 1000px;"
+ [dataTable]="dataTable"
+ [gridConfig]="gridConfig">
+</fusion-grid>
+```
 
-`<fusion-grid style="width: 1000px;height: 1000px;" [dataTable]="dataTable" 
-    [gridConfig]="gridConfig">
-</fusion-grid>`;
-````
 ## Working with Events
 
-To attach event
+```
+<fusion-grid
+ [dataTable]="dataTable"
+ [gridConfig]="gridConfig"
+ (initialized)="initialized($event)">
+</fusion-grid>
+```
 
-`<fusion-grid style="width: 1000px;height: 1000px;" [dataTable]="dataTable" 
-    [gridConfig]="gridConfig" (initialized)="initialized($event)">
-</fusion-grid>`
+## More Details
+
+For detailed documentation please visit FusionCharts [dev center portal](https://fusioncharts.com/dev).
